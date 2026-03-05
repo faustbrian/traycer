@@ -9,6 +9,9 @@
 
 namespace Cline\Traycer\Exceptions;
 
+use Facade\IgnitionContracts\BaseSolution;
+use Facade\IgnitionContracts\ProvidesSolution;
+use Facade\IgnitionContracts\Solution;
 use InvalidArgumentException;
 
 use function sprintf;
@@ -18,7 +21,7 @@ use function sprintf;
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidStrategyConfigurationException extends InvalidArgumentException implements TraycerException
+final class InvalidStrategyConfigurationException extends InvalidArgumentException implements ProvidesSolution, TraycerException
 {
     /**
      * Strategy alias was not found in configuration.
@@ -42,5 +45,17 @@ final class InvalidStrategyConfigurationException extends InvalidArgumentExcepti
     public static function invalidClass(string $class): self
     {
         return new self(sprintf('Traycer strategy class "%s" must implement the tracing identifier strategy contract.', $class));
+    }
+
+    public function getSolution(): Solution
+    {
+        /** @var BaseSolution $solution */
+        $solution = BaseSolution::create('Review package usage and configuration.');
+
+        return $solution
+            ->setSolutionDescription('Exception: '.$this->getMessage())
+            ->setDocumentationLinks([
+                'Package documentation' => 'https://github.com/cline/traycer',
+            ]);
     }
 }
