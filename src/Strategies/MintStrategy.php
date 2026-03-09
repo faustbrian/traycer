@@ -7,23 +7,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Strategies;
+namespace Cline\Correlation\Strategies;
 
+use Cline\Correlation\Contracts\CorrelationIdentifierStrategy;
 use Cline\Mint\Enums\IdentifierType;
 use Cline\Mint\MintManager;
-use Cline\Traycer\Contracts\TracingIdentifierStrategy;
 use Illuminate\Http\Request;
 
 use function is_array;
 use function is_string;
 
 /**
- * Generates tracing identifiers using the Mint identifier generators.
+ * Generates correlation identifiers using the Mint identifier generators.
  *
  * @author Brian Faust <brian@cline.sh>
  * @psalm-immutable
  */
-final readonly class MintStrategy implements TracingIdentifierStrategy
+final readonly class MintStrategy implements CorrelationIdentifierStrategy
 {
     /**
      * Create a new Mint strategy instance.
@@ -36,7 +36,7 @@ final readonly class MintStrategy implements TracingIdentifierStrategy
     ) {}
 
     /**
-     * Generate a tracing identifier for the request.
+     * Generate a correlation identifier for the request.
      */
     public function generate(Request $request): string
     {

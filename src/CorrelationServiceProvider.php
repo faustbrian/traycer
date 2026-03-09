@@ -7,18 +7,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer;
+namespace Cline\Correlation;
 
 use Override;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 /**
- * Laravel service provider for Traycer package.
+ * Laravel service provider for Correlation package.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class TraycerServiceProvider extends PackageServiceProvider
+final class CorrelationServiceProvider extends PackageServiceProvider
 {
     /**
      * Configure the package.
@@ -28,16 +28,16 @@ final class TraycerServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('traycer')
+            ->name('correlation')
             ->hasConfigFile();
     }
 
     /**
-     * Register Traycer services.
+     * Register Correlation services.
      */
     #[Override()]
     public function registeringPackage(): void
     {
-        $this->app->singleton(TraycerManager::class);
+        $this->app->singleton(CorrelationManager::class);
     }
 }

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Exceptions;
+namespace Cline\Correlation\Exceptions;
 
 use Facade\IgnitionContracts\BaseSolution;
 use Facade\IgnitionContracts\ProvidesSolution;
@@ -17,18 +17,18 @@ use InvalidArgumentException;
 use function sprintf;
 
 /**
- * Exception thrown when traycer strategy configuration is invalid.
+ * Exception thrown when correlation strategy configuration is invalid.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-final class InvalidStrategyConfigurationException extends InvalidArgumentException implements ProvidesSolution, TraycerException
+final class InvalidStrategyConfigurationException extends InvalidArgumentException implements CorrelationException, ProvidesSolution
 {
     /**
      * Strategy alias was not found in configuration.
      */
     public static function missingStrategy(string $alias): self
     {
-        return new self(sprintf('Traycer strategy "%s" is not configured.', $alias));
+        return new self(sprintf('Correlation strategy "%s" is not configured.', $alias));
     }
 
     /**
@@ -36,7 +36,7 @@ final class InvalidStrategyConfigurationException extends InvalidArgumentExcepti
      */
     public static function missingClass(string $alias): self
     {
-        return new self(sprintf('Traycer strategy "%s" does not define a valid class.', $alias));
+        return new self(sprintf('Correlation strategy "%s" does not define a valid class.', $alias));
     }
 
     /**
@@ -44,7 +44,7 @@ final class InvalidStrategyConfigurationException extends InvalidArgumentExcepti
      */
     public static function invalidClass(string $class): self
     {
-        return new self(sprintf('Traycer strategy class "%s" must implement the tracing identifier strategy contract.', $class));
+        return new self(sprintf('Correlation strategy class "%s" must implement the correlation identifier strategy contract.', $class));
     }
 
     public function getSolution(): Solution
@@ -55,7 +55,7 @@ final class InvalidStrategyConfigurationException extends InvalidArgumentExcepti
         return $solution
             ->setSolutionDescription('Exception: '.$this->getMessage())
             ->setDocumentationLinks([
-                'Package documentation' => 'https://github.com/cline/traycer',
+                'Package documentation' => 'https://github.com/cline/correlation',
             ]);
     }
 }

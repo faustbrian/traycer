@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
+use Cline\Correlation\Strategies\IdempotencyStrategy;
 use Cline\Idempotency\IdempotencyKey;
-use Cline\Traycer\Strategies\IdempotencyStrategy;
 use Illuminate\Http\Request;
 
-it('generates a tracing identifier with a configured algorithm', function (): void {
+it('generates a correlation identifier with a configured algorithm', function (): void {
     $strategy = new IdempotencyStrategy(['algorithm' => 'sha256']);
 
     $request = Request::create(
@@ -26,7 +26,7 @@ it('generates a tracing identifier with a configured algorithm', function (): vo
     expect($result)->toBeString()->not->toBeEmpty();
 });
 
-it('generates a tracing identifier with a configured prefix', function (): void {
+it('generates a correlation identifier with a configured prefix', function (): void {
     $strategy = new IdempotencyStrategy(['prefix' => 'trace']);
 
     $request = Request::create(
@@ -43,7 +43,7 @@ it('generates a tracing identifier with a configured prefix', function (): void 
     expect($result)->toBeString()->not->toBe($withoutPrefix);
 });
 
-it('generates a tracing identifier with no configuration', function (): void {
+it('generates a correlation identifier with no configuration', function (): void {
     $strategy = new IdempotencyStrategy();
 
     $request = Request::create(

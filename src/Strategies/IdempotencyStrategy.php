@@ -7,22 +7,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Strategies;
+namespace Cline\Correlation\Strategies;
 
+use Cline\Correlation\Contracts\CorrelationIdentifierStrategy;
 use Cline\Idempotency\HashAlgorithm;
 use Cline\Idempotency\IdempotencyKey;
-use Cline\Traycer\Contracts\TracingIdentifierStrategy;
 use Illuminate\Http\Request;
 
 use function is_string;
 
 /**
- * Generates tracing identifiers from request JSON using idempotency hashing.
+ * Generates correlation identifiers from request JSON using idempotency hashing.
  *
  * @author Brian Faust <brian@cline.sh>
  * @psalm-immutable
  */
-final readonly class IdempotencyStrategy implements TracingIdentifierStrategy
+final readonly class IdempotencyStrategy implements CorrelationIdentifierStrategy
 {
     /**
      * Create a new idempotency strategy instance.
@@ -34,7 +34,7 @@ final readonly class IdempotencyStrategy implements TracingIdentifierStrategy
     ) {}
 
     /**
-     * Generate a tracing identifier for the request.
+     * Generate a correlation identifier for the request.
      */
     public function generate(Request $request): string
     {

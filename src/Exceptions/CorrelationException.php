@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Exceptions;
+namespace Cline\Correlation\Exceptions;
 
 use Throwable;
 
 /**
- * Marker interface for Traycer exceptions.
+ * Marker interface for Correlation exceptions.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface TraycerException extends Throwable {}
+interface CorrelationException extends Throwable {}

@@ -1,6 +1,6 @@
 {
-    "name": "cline/traycer",
-    "description": "Generate and attach tracing identifiers to Laravel request context",
+    "name": "cline/correlation",
+    "description": "Generate and attach correlation identifiers to Laravel request context",
     "license": "MIT",
     "keywords": [
         "php"
@@ -26,14 +26,14 @@
         "symfony/var-dumper": "^6.0 || ^7.4.6"
     },
     "suggest": {
-        "cline/idempotency": "Provides the default idempotency-based tracing identifier strategy.",
-        "cline/mint": "Optional. Provide flexible Mint-based tracing identifier generators."
+        "cline/idempotency": "Provides the default idempotency-based correlation identifier strategy.",
+        "cline/mint": "Optional. Provide flexible Mint-based correlation identifier generators."
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Cline\\Traycer\\": "src/"
+            "Cline\\Correlation\\": "src/"
         }
     },
     "autoload-dev": {
@@ -51,7 +51,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Cline\\Traycer\\TraycerServiceProvider"
+                "Cline\\Correlation\\CorrelationServiceProvider"
             ]
         }
     },

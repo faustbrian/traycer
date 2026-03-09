@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer;
+namespace Cline\Correlation;
 
-use Cline\Traycer\Contracts\TracingIdentifierStrategy;
-use Cline\Traycer\Exceptions\InvalidStrategyConfigurationException;
+use Cline\Correlation\Contracts\CorrelationIdentifierStrategy;
+use Cline\Correlation\Exceptions\InvalidStrategyConfigurationException;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
@@ -20,15 +20,15 @@ use function is_array;
 use function is_string;
 
 /**
- * Resolves and executes tracing identifier strategies.
+ * Resolves and executes correlation identifier strategies.
  *
  * @author Brian Faust <brian@cline.sh>
  * @psalm-immutable
  */
-final readonly class TraycerManager
+final readonly class CorrelationManager
 {
     /**
-     * Create a new Traycer manager instance.
+     * Create a new Correlation manager instance.
      */
     public function __construct(
         private ConfigRepository $config,
@@ -36,7 +36,7 @@ final readonly class TraycerManager
     ) {}
 
     /**
-     * Generate a tracing identifier for the given request.
+     * Generate a correlation identifier for the given request.
      */
     public function generate(Request $request): string
     {
@@ -46,14 +46,14 @@ final readonly class TraycerManager
     }
 
     /**
-     * Resolve the configured tracing identifier strategy.
+     * Resolve the configured correlation identifier strategy.
      *
      * @throws InvalidStrategyConfigurationException
      */
-    private function resolveStrategy(): TracingIdentifierStrategy
+    private function resolveStrategy(): CorrelationIdentifierStrategy
     {
-        $strategyKey = $this->config->get('traycer.strategy', 'idempotency');
-        $strategies = $this->config->get('traycer.strategies', []);
+        $strategyKey = $this->config->get('correlation.strategy', 'idempotency');
+        $strategies = $this->config->get('correlation.strategies', []);
 
         if (is_string($strategyKey) && is_array($strategies) && isset($strategies[$strategyKey])) {
             $strategyConfig = $strategies[$strategyKey];
@@ -67,7 +67,7 @@ final readonly class TraycerManager
                 'config' => is_array($strategyConfig) ? $strategyConfig : [],
             ]);
 
-            if (!$instance instanceof TracingIdentifierStrategy) {
+            if (!$instance instanceof CorrelationIdentifierStrategy) {
                 throw InvalidStrategyConfigurationException::invalidClass($class);
             }
 
@@ -77,7 +77,7 @@ final readonly class TraycerManager
         if (is_string($strategyKey) && class_exists($strategyKey)) {
             $instance = $this->container->make($strategyKey);
 
-            if (!$instance instanceof TracingIdentifierStrategy) {
+            if (!$instance instanceof CorrelationIdentifierStrategy) {
                 throw InvalidStrategyConfigurationException::invalidClass($strategyKey);
             }
 

@@ -9,7 +9,7 @@
 
 namespace Tests;
 
-use Cline\Traycer\TraycerServiceProvider;
+use Cline\Correlation\CorrelationServiceProvider;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Override;
@@ -30,7 +30,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
-            TraycerServiceProvider::class,
+            CorrelationServiceProvider::class,
         ];
     }
 }

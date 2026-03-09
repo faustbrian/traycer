@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Http\Middleware;
+namespace Cline\Correlation\Http\Middleware;
 
-use Cline\Traycer\TraycerManager;
+use Cline\Correlation\CorrelationManager;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Context;
@@ -18,18 +18,18 @@ use function config;
 use function is_string;
 
 /**
- * Adds a tracing identifier to Laravel's log context for each request.
+ * Adds a correlation identifier to Laravel's log context for each request.
  *
  * @author Brian Faust <brian@cline.sh>
  * @psalm-immutable
  */
-final readonly class AddTracingIdentifier
+final readonly class AddCorrelationIdentifier
 {
     /**
      * Create a new middleware instance.
      */
     public function __construct(
-        private TraycerManager $manager,
+        private CorrelationManager $manager,
     ) {}
 
     /**
@@ -40,10 +40,10 @@ final readonly class AddTracingIdentifier
     public function handle(Request $request, Closure $next): mixed
     {
         $identifier = $this->manager->generate($request);
-        $contextKey = config('traycer.context_key', 'tracingIdentifier');
+        $contextKey = config('correlation.context_key', 'correlationIdentifier');
 
         if (!is_string($contextKey) || $contextKey === '') {
-            $contextKey = 'tracingIdentifier';
+            $contextKey = 'correlationIdentifier';
         }
 
         Context::add($contextKey, $identifier);

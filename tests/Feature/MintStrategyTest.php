@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
+use Cline\Correlation\Strategies\MintStrategy;
 use Cline\Mint\Enums\IdentifierType;
 use Cline\Mint\MintManager;
-use Cline\Traycer\Strategies\MintStrategy;
 use Illuminate\Http\Request;
 
-it('generates a tracing identifier using the uuid type from config string', function (): void {
+it('generates a correlation identifier using the uuid type from config string', function (): void {
     $mint = new MintManager();
     $strategy = new MintStrategy($mint, ['type' => 'uuid']);
 
@@ -24,7 +24,7 @@ it('generates a tracing identifier using the uuid type from config string', func
     expect($result)->toBeString()->toHaveLength(36);
 });
 
-it('generates a tracing identifier using an IdentifierType enum instance', function (): void {
+it('generates a correlation identifier using an IdentifierType enum instance', function (): void {
     $mint = new MintManager();
     $strategy = new MintStrategy($mint, ['type' => IdentifierType::Uuid]);
 
@@ -50,7 +50,7 @@ it('falls back to ulid when an invalid type string is provided, using uuid as de
     expect($result)->toBeString()->not->toBeEmpty();
 });
 
-it('generates a tracing identifier with options passed to mint', function (): void {
+it('generates a correlation identifier with options passed to mint', function (): void {
     $mint = new MintManager();
     $strategy = new MintStrategy($mint, [
         'type' => 'uuid',

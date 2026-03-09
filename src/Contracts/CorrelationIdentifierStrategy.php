@@ -7,19 +7,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Cline\Traycer\Contracts;
+namespace Cline\Correlation\Contracts;
 
 use Illuminate\Http\Request;
 
 /**
- * Strategy contract for generating tracing identifiers.
+ * Strategy contract for generating correlation identifiers.
  *
  * @author Brian Faust <brian@cline.sh>
  */
-interface TracingIdentifierStrategy
+interface CorrelationIdentifierStrategy
 {
     /**
-     * Generate a tracing identifier for the given request.
+     * Generate a correlation identifier for the given request.
      */
     public function generate(Request $request): string;
 }

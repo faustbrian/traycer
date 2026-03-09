@@ -9,14 +9,14 @@
 
 namespace Tests\Fixtures;
 
-use Cline\Traycer\Contracts\TracingIdentifierStrategy;
+use Cline\Correlation\Contracts\CorrelationIdentifierStrategy;
 use Illuminate\Http\Request;
 
 /**
  * @author Brian Faust <brian@cline.sh>
  * @psalm-immutable
  */
-final readonly class StaticStrategy implements TracingIdentifierStrategy
+final readonly class StaticStrategy implements CorrelationIdentifierStrategy
 {
     public function generate(Request $request): string
     {

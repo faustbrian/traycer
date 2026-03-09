@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-use Cline\Traycer\Exceptions\InvalidStrategyConfigurationException;
+use Cline\Correlation\Exceptions\InvalidStrategyConfigurationException;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Facade\IgnitionContracts\Solution;
 
